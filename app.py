@@ -18,6 +18,7 @@ db = SQLAlchemy(app)
 
 from models import Result
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     errors = []
@@ -34,7 +35,7 @@ def index():
         if r:
             # text processing
             raw = BeautifulSoup(r.text, 'html.parser').get_text()
-            nltk.data.path.append('./nltk_data/') # set path
+            nltk.data.path.append('./nltk_data/')  # set path
             tokens = nltk.word_tokenize(raw)
             text = nltk.Text(tokens)
             # remove punctutation, count raw words
@@ -48,17 +49,19 @@ def index():
             results = sorted(
                 no_stop_words_count.items(),
                 key=operator.itemgetter(1),
-                reverse=True)
+                reverse=True)[:10]
             try:
                 result = Result(
-                        url=url,
-                        result_all=raw_word_count,
-                        result_no_stop_words=no_stop_words_count)
+                    url=url,
+                    result_all=raw_word_count,
+                    result_no_stop_words=no_stop_words_count)
                 db.session.add(result)
                 db.session.commit()
             except:
                 errors.append("Unable to add item to database")
     return render_template('index.html', errors=errors, results=results)
+
+
 @app.route('/<name>')
 def hello_name(name):
     return "Hello {}".format(name)
