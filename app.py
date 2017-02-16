@@ -54,7 +54,7 @@ def count_and_save_words(url):
     results = sorted(
         no_stop_words_count.items(),
         key=operator.itemgetter(1),
-        reverse=True)[:10]
+        reverse=True)[:20]
     # commit results to database
     try:
         result = Result(
