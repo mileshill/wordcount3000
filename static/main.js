@@ -58,7 +58,7 @@
                     error(function(error){
                         $log.log(error);
                         $scope.loading = false;
-                        $scope.submitButtonText = 'Submit";
+                        $scope.submitButtonText = "Submit";
                         $scope.urlerror = true;
                     });
             };
